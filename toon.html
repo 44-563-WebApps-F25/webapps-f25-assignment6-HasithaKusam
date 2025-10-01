@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cartoon game by Hasitha Kusam</title>
+  <style>
+    body {font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 2rem;}
+    form {display: grid; gap: 0.75rem; max-width: 420px;}
+    label {font-weight: 600;}
+    input {padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px;}
+    button {padding: 0.6rem 1rem; border: 0; border-radius: 8px; cursor: pointer;}
+    #result {margin-top: 1rem; font-weight: 700;}
+  </style>
+</head>
+<body>
+  <h1>Cartoon game by Hasitha Kusam</h1>
+
+  <form id="toonForm" onsubmit="return false;">
+    <div>
+      <label for="color">That’s all folks</label>
+      <input id="color" type="password" value="Porky Pig" />
+    </div>
+
+    <div>
+      <label for="colorGuess">Guess the toon</label>
+      <input id="colorGuess" type="text" placeholder="Type your guess" />
+    </div>
+
+    <button type="button" onclick="checkToon()">Check the guess</button>
+  </form>
+
+  <div id="result" aria-live="polite">Yahoo: 0 | Darn: 0</div>
+
+  <script>
+    let darn = 0;
+    let yahoo = 0;
+
+    function checkToon() {
+      const secret = document.getElementById('color').value;
+      const guess = document.getElementById('colorGuess').value;
+
+      if (guess === secret) {
+        yahoo += 1;
+        alert('You got it');
+      } else {
+        darn += 1;
+        alert('Missed me');
+      }
+
+      document.getElementById('result').innerHTML = `Yahoo: ${yahoo} | Darn: ${darn}`;
+
+      console.log({ secret, guess, yahoo, darn });
+    }
+  </script>
+</body>
+</html>
