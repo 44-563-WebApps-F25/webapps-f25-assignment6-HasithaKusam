@@ -1,56 +1,82 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
   <title>Cartoon game by Hasitha Kusam</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body {font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 2rem;}
-    form {display: grid; gap: 0.75rem; max-width: 420px;}
-    label {font-weight: 600;}
-    input {padding: 0.5rem; border: 1px solid #ccc; border-radius: 6px;}
-    button {padding: 0.6rem 1rem; border: 0; border-radius: 8px; cursor: pointer;}
-    #result {margin-top: 1rem; font-weight: 700;}
+    body{font-family:system-ui, Arial, sans-serif; max-width:800px; margin:24px auto; padding:0 12px;}
+    fieldset{margin:12px 0; padding:12px;}
+    .row{margin:8px 0;}
+    label{display:inline-block; min-width:170px;}
+    #counts{margin-top:8px; font-weight:600;}
+    .hint{font-size:12px; opacity:.7}
+    img.clickable{cursor:pointer; border:1px solid #ccc; border-radius:8px}
   </style>
 </head>
 <body>
   <h1>Cartoon game by Hasitha Kusam</h1>
 
-  <form id="toonForm" onsubmit="return false;">
-    <div>
-      <label for="color">That’s all folks</label>
-      <input id="color" type="password" value="Porky Pig" />
+  <fieldset>
+    <legend>Guess the toon</legend>
+    <div class="row">
+      <label for="toon">That's all folks:</label>
+      <input id="toon" type="password" value="Porky Pig">
+      <span class="hint">hint: pig </span>
     </div>
-
-    <div>
-      <label for="colorGuess">Guess the toon</label>
-      <input id="colorGuess" type="text" placeholder="Type your guess" />
+    <div class="row">
+      <label for="guess">Guess the toon:</label>
+      <input id="guess" type="text" placeholder="Type your guess">
     </div>
+    <div class="row">
+      <button type="button" onclick="checkToon()">Check the guess</button>
+    </div>
+    <div id="counts">✅ Yahoo: 0 | ❌ Darn: 0</div>
+  </fieldset>
 
-    <button type="button" onclick="checkToon()">Check the guess</button>
-  </form>
-
-  <div id="result" aria-live="polite">Yahoo: 0 | Darn: 0</div>
+  <fieldset>
+    <legend>Plant images (click to cycle)</legend>
+    <div id="plantWrap">
+      <img id="plantPic" class="clickable" src="sunflower.jpg" width="150" height="150" alt="plant" onclick="updatePic()">
+    </div>
+    <div class="hint">Click the image to switch between the three plant photos.</div>
+  </fieldset>
 
   <script>
-    let darn = 0;
-    let yahoo = 0;
+    let darn = 0, yahoo = 0;
 
-    function checkToon() {
-      const secret = document.getElementById('color').value;
-      const guess = document.getElementById('colorGuess').value;
-
-      if (guess === secret) {
-        yahoo += 1;
+    function checkToon(){
+      const secret = document.getElementById('toon').value.trim();
+      const guess  = document.getElementById('guess').value.trim();
+      if (guess === secret){
+        yahoo++;
         alert('You got it');
       } else {
-        darn += 1;
+        darn++;
         alert('Missed me');
       }
+      document.getElementById('counts').innerHTML = `✅ Yahoo: ${yahoo} | ❌ Darn: ${darn}`;
+    }
 
-      document.getElementById('result').innerHTML = `Yahoo: ${yahoo} | Darn: ${darn}`;
+    let usePic = 1; 
 
-      console.log({ secret, guess, yahoo, darn });
+    function updatePic(){
+      const img = document.getElementById('plantPic');
+      switch (usePic){
+        case 1:
+          img.src = 'sunflower.jpg'; 
+          usePic = 2;
+          break;
+        case 2:
+          img.src = 'aloevera.jpg'; 
+          usePic = 3;
+          break;
+        case 3:
+        default:
+          img.src = 'hibiscus.jpg'; 
+          usePic = 1; 
+          break;
+      }
     }
   </script>
 </body>
