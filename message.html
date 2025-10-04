@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hasitha Kusam message cost</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; max-width: 900px; }
+    fieldset { margin: 14px 0; padding: 12px; }
+    label { display: inline-block; width: 260px; margin: 6px 0; }
+    #totals, #opResult { margin-top: 10px; font-weight: 600; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Hasitha Kusam message cost</h1>
+
+  <fieldset>
+    <legend>Message Pricing</legend>
+
+    <label for="standardCharge">Enter cost per letter:</label>
+    <input id="standardCharge" type="number" step="0.01" value="0.50"><br>
+
+    <label for="discountLength">Enter the length needed for the discount:</label>
+    <input id="discountLength" type="number" value="20"><br>
+
+    <label for="discountCharge">Enter the discount rate:</label>
+    <input id="discountCharge" type="number" step="0.01" value="0.25"><br>
+
+    <button type="button" onclick="amounts()">Show total</button>
+    <div id="totals">Totals will appear here…</div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Choose an operation</legend>
+    <label><input type="radio" name="op" value="times" onclick="chooseOp()"> product</label>
+    <label><input type="radio" name="op" value="add"   onclick="chooseOp()"> sum</label>
+    <label><input type="radio" name="op" value="mod"   onclick="chooseOp()"> mod</label>
+    <label><input type="radio" name="op" value="diff"  onclick="chooseOp()"> difference</label>
+    <div id="opResult">Pick an operation above.</div>
+  </fieldset>
+
+  <script>
+    function amounts() {
+      const price = Number(document.getElementById('standardCharge').value);
+      const discountPosition = parseInt(document.getElementById('discountLength').value, 10);
+      const discount = Number(document.getElementById('discountCharge').value);
+
+      let totalCosts = '';
+      for (let size = discountPosition - 3; size <= discountPosition + 3; size++) {
+        const fullLen = Math.min(size, discountPosition);
+        const discLen = Math.max(0, size - discountPosition);
+        const cost = fullLen * price + discLen * discount;
+
+        totalCosts += `length ${size} is ${cost.toFixed(2)}; `;
+      }
+      document.getElementById('totals').innerHTML = 'Totals are: ' + totalCosts;
+    }
+
+    function chooseOp() {
+      const a = Number(document.getElementById('standardCharge').value);
+      const b = Number(document.getElementById('discountLength').value);
+
+      const radios = document.getElementsByName('op');
+      let op = null;
+      for (const r of radios) { if (r.checked) { op = r.value; break; } }
+      if (!op) { document.getElementById('opResult').textContent = 'Please select an operation.'; return; }
+
+      let text = '';
+      if (op === 'times') {
+        text = `${a} * ${b} is ${a * b}`;
+      } else if (op === 'add') {
+        text = `${a} + ${b} is ${a + b}`;
+      } else if (op === 'mod') {
+        if (b === 0) text = `Cannot compute ${a}%${b} (division by zero).`;
+        else text = `${a} % ${b} is ${a % b}`;
+      } else if (op === 'diff') {
+        text = `${a} - ${b} is ${a - b}`;
+      }
+      document.getElementById('opResult').textContent = text;
+    }
+  </script>
+</body>
+</html>
