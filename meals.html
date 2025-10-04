@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hasitha Kusam plans a meal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; max-width: 900px; }
+    fieldset { margin: 14px 0; padding: 12px; }
+    label { margin-right: 16px; }
+    #mealOut { white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Hasitha Kusam plans a meal</h1>
+
+  <fieldset>
+    <legend>Meal choices</legend>
+    <label><input id="saladBox" type="checkbox" value="True"> Serve salad</label>
+    <label><input id="stewBox" type="checkbox" value="True"> Make stew</label>
+    <label><input id="chocBox" type="checkbox" value="False"> Chocolate for dessert</label>
+    <div style="margin-top:10px;">
+      <button type="button" onclick="choices()">Meal Choices</button>
+    </div>
+    <div id="mealOut">{}</div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Add details</legend>
+    <div style="margin:6px 0;">
+      <label for="drink">Enter drink:</label>
+      <input id="drink" type="text" value="Wine">
+    </div>
+    <div style="margin:6px 0;">
+      <label for="starter">Enter starter:</label>
+      <input id="starter" type="text" placeholder="e.g., Soup">
+    </div>
+    <button type="button" onclick="updateMeal()">Update the meal</button>
+  </fieldset>
+
+  <script>
+    let my_meal = {};
+
+    function choices() {
+      my_meal = {}; 
+      my_meal.salad     = document.getElementById('saladBox').checked;
+      my_meal.stew      = document.getElementById('stewBox').checked;
+      my_meal.chocolate = document.getElementById('chocBox').checked;
+      document.getElementById('mealOut').textContent = JSON.stringify(my_meal, null, 2);
+    }
+
+    function updateMeal() {
+      const drink   = document.getElementById('drink').value.trim();
+      const starter = document.getElementById('starter').value.trim();
+      my_meal.drink   = drink;
+      my_meal.starter = starter;
+      document.getElementById('mealOut').textContent = JSON.stringify(my_meal, null, 2);
+    }
+  </script>
+</body>
+</html>
