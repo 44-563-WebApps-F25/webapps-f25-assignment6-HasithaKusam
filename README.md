@@ -4,5 +4,5 @@ Introduction to Java Script and DOM
 Hosted at: 
 - [toon.html](https://44-563-webapps-f25.github.io/webapps-f25-assignment6-HasithaKusam/toon.html)
 - [message.html](https://44-563-webapps-f25.github.io/webapps-f25-assignment6-HasithaKusam/message.html)
-- [meals.html](https://44-563-webapps-f25.github.io/webapps-f25-assignment6-HasithaKusam/meals.html)
+- [meal.html](https://44-563-webapps-f25.github.io/webapps-f25-assignment6-HasithaKusam/meal.html)
 
